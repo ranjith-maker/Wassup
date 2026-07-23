@@ -98,7 +98,7 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
     res.cookie('token', token, {
         httpOnly: true, 
         secure: true,
-        sameSite: 'lax', 
+        sameSite: 'none', 
         maxAge: 2 * 24 * 60 * 60 * 1000 
     });
 
@@ -121,7 +121,7 @@ export const logout = catchAsync(async(req , res , next)=>{
 res.clearCookie('token', {
         httpOnly: true, 
         secure: true,
-        sameSite: 'lax', 
+        sameSite: 'none', 
     });
 
 res.status(200).json({
