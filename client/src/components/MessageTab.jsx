@@ -140,7 +140,7 @@ function handleClearImage(){
             setShowEmojiPicker(false);
 
             const response = await axios.post(
-                "http://localhost:4000/api/chat/send-message", 
+              `${BASEURL}/api/chat/send-message`, 
                 formData, 
                 { 
                     headers: { "Content-Type": "multipart/form-data" },
