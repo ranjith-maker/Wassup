@@ -26,7 +26,7 @@ const io = initializeSocket(server)
 //for gloabl access via req. object
 app.set('io', io);
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(express.json())
 app.use(express.urlencoded({ extended : true }))
 app.use(cookieParser())
