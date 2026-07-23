@@ -8,9 +8,9 @@ import { authUser } from '../middlewares/authUser.js'
 
 const authRouter = express.Router()
 
-authRouter.post('/register-user', sendOtp  )
+authRouter.post('/send-otp', sendOtp  )
 
-authRouter.post('/login-user', verifyOtp  );
+authRouter.post('/verify-otp', verifyOtp  );
 
 authRouter.post('/logout-user' , logout )
 

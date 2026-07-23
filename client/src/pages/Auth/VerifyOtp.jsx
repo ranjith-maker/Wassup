@@ -2,15 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { setUserData } from "../store/userSlice";
-import { BASEURL } from "../main";
+import { setUserData } from "../../store/userSlice";
+import { BASEURL } from "../../main";
 import { RiWhatsappLine } from "react-icons/ri";
 // import { HiEye } from "react-icons/hi2";
 // import { RiEyeCloseFill } from "react-icons/ri";
 
 
 
-export default function LoginPage() {
+export default function VerifyOtp() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -119,7 +119,7 @@ async function handleVerify(ev) {
 
         try {
             const response = await axios.post(
-                `${BASEURL}/api/auth/login-user`, 
+                `${BASEURL}/api/auth/verify-otp`, 
                 { 
                     email, 
                     otp: finalOtp, 
@@ -135,6 +135,7 @@ async function handleVerify(ev) {
             }
         } catch (err) {
             setError(err.response?.data?.message || "Invalid OTP code. Please try again.");
+            navigate('/send-otp')
         } finally {
             setLoading(false);
         }

@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TbBrandWhatsappFilled } from "react-icons/tb";
 import axios from "axios";
-import { BASEURL } from "../main";
+import { BASEURL } from "../../main";
 import { RiWhatsappLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { setUserData } from "../store/userSlice";
-// import { HiEye } from "react-icons/hi2";
-// import { RiEyeCloseFill } from "react-icons/ri";
+import { setUserData } from "../../store/userSlice";
 
 
-export default function SignupPage() {
+
+export default function SendOtp() {
 
     const navigate = useNavigate();
 
@@ -31,14 +30,15 @@ export default function SignupPage() {
 
         try {
         
-            const response = await axios.post(`${BASEURL}/api/auth/register-user`, {
+            const response = await axios.post(`${BASEURL}/api/auth/send-otp`, 
+            {
                 email: email.trim().toLowerCase(),
                 name: name.trim() || undefined // pass name if user filled it out
             });
 
             if (response.data.success) {
                 // Passing both email and name forward in router state history for step-2
-                navigate("/login", { 
+                navigate("/verify-otp", { 
                     state: { 
                         email: email.trim().toLowerCase(),
                         name: name.trim()
