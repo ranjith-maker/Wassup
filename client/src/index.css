@@ -1,0 +1,16 @@
+@import 'tailwindcss';
+
+
+
+html,
+body {
+ height : 100%;
+ width : 100%;
+ background-color : #101040; 
+ color: aliceblue;
+ font-family: system-ui, sans-serif;
+}
+
+
+
+
