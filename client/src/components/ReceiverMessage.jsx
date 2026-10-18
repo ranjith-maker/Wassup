@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 
 export default function ReceiverMessage({ message, image }) {
-    // Grab the active chat user context from your Redux store
+    // Grab the active chat user context from Redux store
     const { selectedUser } = useSelector(state => state.user);
 
     // Dynamic fallback avatar using the selected chat user context properties
@@ -50,7 +50,7 @@ export default function ReceiverMessage({ message, image }) {
                     </p>
                 )}
 
-                {/* Left Tail bubble styling element configured safely matching the top-left hook */}
+                {/* left tail bubble  */}
                 <div className="absolute top-0 -left-1 w-0 h-0 border-b-8 border-b-transparent border-r-8 border-r-white filter drop-shadow-[-1px_0px_0px_rgba(226,232,240,0.8)]" />
             </div>
             

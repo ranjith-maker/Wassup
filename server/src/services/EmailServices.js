@@ -50,7 +50,7 @@ export const sendOtptoEmail = async (email, otp) => {
 
     try {
         const data = await resend.emails.send({
-            // 🚀 Must use onboarding@resend.dev unless you have verified a custom domain
+            //  lets use onboarding@resend.dev before verifing a custom domain
             from: "Wassup Support <ranjith@contact.wassupchat.online>",
             to: email,
             subject: "Ranjith's Wassup Verification OTP",

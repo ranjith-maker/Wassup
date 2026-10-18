@@ -19,15 +19,16 @@ import { initializeSocket } from './src/services/Socket.js'
 
 
 const app = express()
-//creating a native server here
+//creating a native server here, passing our express app here
 const server = http.createServer(app)
-//initializing sockets here
+//initializing sockets here,TCP connection upgrades to Websocket connection
 const io = initializeSocket(server)
 //for gloabl access via req. object
 app.set('io', io);
 
 app.use(morgan('dev'));
 app.use(express.json())
+//read data sent from HTML forms or URL-encoded requests.
 app.use(express.urlencoded({ extended : true }))
 app.use(cookieParser())
 

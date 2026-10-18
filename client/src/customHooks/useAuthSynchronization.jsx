@@ -15,7 +15,7 @@ export const useAuthSynchronization = () => {
 
     // Phase 1: this'll persist me across pages
     useEffect(() => {
-        if (userData) return;
+        if (userData) return; //as user is null before login
 
         async function fetchMyProfile() {
             try {
@@ -36,9 +36,10 @@ export const useAuthSynchronization = () => {
 
         fetchMyProfile();
     }, [userData, dispatch]);
+//running this effect after the first render of my app, and run it again whenever userData changes. from null to userobj.
+    
 
-
-    // Phase 2: this'll show all users if I'm loggedin 
+// Phase 2: this'll show all users inside app 
     useEffect(() => {
         if (!isAuthenticated || otherUsers) return;
 
@@ -49,6 +50,7 @@ export const useAuthSynchronization = () => {
                 });
                 if (response.data.success) {
                     dispatch(setOtherUsers(response.data.data));
+                    //bend returns an arr of user obj
                 }
             } catch (err) {
                 console.error("Failed to compile user registry:", err.message);
@@ -59,6 +61,10 @@ export const useAuthSynchronization = () => {
 };
 
 
+        //if(!true  || false) return since if statemetn is true we return here
+        //after above effect runs,is auth becomes true in redux dependency is changed, now (!true || null) 
+        // if(false) return means the beow api will be called as if statemtn alswsya expects true only
+        //  Since the condition is false, the return is not executed, and the API is called.
 
 
 

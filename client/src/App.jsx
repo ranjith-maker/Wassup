@@ -26,7 +26,7 @@ function App() {
 
 const { loading , isAuthenticated} = useSelector((state) => state.user);
 
-    // Showing skeletal screen while loading to avoid while UI flashes
+    // Showing skeletal screen while loading to avoid the UI flashes
     if (loading) {
         return <ShimmerLoading type="fullscreen" />;
     }
@@ -51,7 +51,7 @@ return (
                 element={ isAuthenticated ? <ProfileDetails/> : <Navigate to='/send-otp' replace /> }
                 />
 
-                {/* 2. PUBLIC ROUTE CHANNELS (Require User Status) */}
+                {/* 2. PUBLIC ROUTE CHANNELS (Require User Status as logined) */}
                 <Route 
                     path="/send-otp" 
                     element={!isAuthenticated ? <SendOtp /> : <Navigate to="/" replace />} 
@@ -61,7 +61,7 @@ return (
                     element={!isAuthenticated ? <VerifyOtp /> : <Navigate to="/" replace />} 
                 />
 
-                {/* 3.this FALLBACK REDIRECT */}
+                {/* 3.this FALLBACK REDIRECT to login page*/}
                 <Route 
                     path="*" 
                     element={<Navigate to={isAuthenticated ? "/" : "/send-otp"} replace />} 

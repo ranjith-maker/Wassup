@@ -50,7 +50,7 @@ export const sendOtp = catchAsync(async (req, res, next) => {
     });
 });
 
-
+ 
 
 export const verifyOtp = catchAsync(async (req, res, next) => {
     const { email, otp, name } = req.body;
@@ -84,7 +84,7 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
     }
 
 
-    // 3. Construct JWT Payload (Valid for 2 days)
+    // 3. Crate JWT Payload (Valid for 2 days)
     const token = jwt.sign(
         { id: user._id, email: user.email },
         process.env.JWT_SECRET,
@@ -93,7 +93,7 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
 
     // 4. deleting the verified OTP record immediately so it can never be reused
     await OTP.deleteOne({ _id: otpRecord._id });
-
+ 
   
     res.cookie('token', token, {
         httpOnly: true, 
@@ -102,7 +102,7 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
         maxAge: 2 * 24 * 60 * 60 * 1000 
     });
 
-    // 6. Return response to home route redirection
+    // 6. response as user data
     return res.status(200).json({
         success: true,
         message: "Authenticated successfully",

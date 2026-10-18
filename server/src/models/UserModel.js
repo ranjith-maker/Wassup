@@ -56,7 +56,7 @@ const payload = {
     id : this._id
 }
 
-const token = jwt.sign(payload , process.env.JWT_SECRET , {expiresIn : '7d'} )
+const token = jwt.sign(payload , process.env.JWT_SECRET , {expiresIn : '2d'} )
 
 return token
 

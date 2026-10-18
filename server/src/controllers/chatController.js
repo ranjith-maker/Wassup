@@ -36,7 +36,7 @@ export const sendMessage = catchAsync(async (req, res, next) => {
         imageUrl = result.secure_url;
     }
 
-    // 2. Generate the sorted unique roomId hash string ("id1_id2")
+    // 2. creating the sorted unique roomId ("id1_id2") without sorting DB would think these are two different conversations:both messages belong to the same room:
     const roomId = [senderId.toString(), receiverId.toString()].sort().join("_");
 
     // 3. Create the document record entry in MongoDB
@@ -48,7 +48,7 @@ export const sendMessage = catchAsync(async (req, res, next) => {
         imageUrl: imageUrl
     });
 
-    // 4. Populate profile fields using "name" property from your User Schema
+    // 4. Populate profile fields using name,pic also
     const populatedMessage = await Message.findById(newMessage._id)
         .populate("sender", "name profilePicture")
         .populate("receiver", "name profilePicture");
@@ -85,6 +85,8 @@ export const getAllMessages = catchAsync(async (req, res, next) => {
     if (!receiverId) {
         throw new AppError("Target contact query parameters are missing", 400);
     }
+
+//it makes fetching convo history simple: Message.find({ roomId: "A_B" }) and returns the complete chat between those two users.
 
     const roomId = [senderId.toString(), receiverId.toString()].sort().join("_");
 

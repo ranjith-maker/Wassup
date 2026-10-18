@@ -20,7 +20,7 @@ export const authUser = catchAsync(async (req, res, next) => {
             throw new AppError('The user belonging to this token no longer exists', 404);
         }
 
-        req.user = user;
+        req.user = user
         next();
     } catch (error) {
         // token expired

@@ -57,7 +57,7 @@ export default function MessageTab() {
             return;
         }
 
-async function fetchMessageLogs(){
+ async function fetchMessageLogs(){
             try {
                 setIsLoading(true);
                 const response = await axios.get(
@@ -179,8 +179,7 @@ const isOnline = onlineUsers.includes(selectedUser?._id);
         );
     }
 
-    // ====== CASE B: WORKSPACE INTERACTIVE CHAT PORTAL ENGINE ======
-
+    // Chat Tab comes here when the contact is selected
 
 return (
     <div className={`
@@ -188,13 +187,13 @@ return (
         lg:flex flex-1 flex-col h-full bg-sky-100 relative overflow-hidden
     `}>
         
-        {/* WHATSAPP-STYLE BACKGROUND WALLPAPER LAYER */}
+        {/* WHATSAPP-STYLE BACKGROUND WALLPAPER  */}
         {ChatTheme && (
             <div 
                 className="absolute inset-0 w-full h-full opacity-40 pointer-events-none bg-repeat z-0"
                 style={{ 
                     backgroundImage: `url(${ChatTheme})`,
-                    backgroundSize: 'auto', // Keeps the pattern from scaling up blurrily
+                    backgroundSize: 'auto', 
                 }} 
             />
         )}
@@ -227,7 +226,7 @@ return (
         </header>
 
         {/* MESSAGE CONTAINER */}
-        {/* Note: added z-10 and relative so messages display safely above the wallpaper layer */}
+        {/* added z-10 and relative so messages above the wallpaper layer */}
         <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-4 scrollbar-thin relative z-10">
             {isLoading ? (
                 <div className="h-full w-full flex items-center justify-center text-slate-400 text-sm font-medium">
@@ -264,7 +263,7 @@ return (
             )}
         </div>
 
-        {/* DOCK FOOTER COMPOSER */}
+        {/* footer*/}
         <footer className="p-3 lg:p-4 bg-white border-t border-[#e2e8f0] relative shrink-0 z-10">
             {imagePreview && (
                 <div className="absolute bottom-full left-4 mb-3 p-2 bg-sky-50 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-2 z-40">

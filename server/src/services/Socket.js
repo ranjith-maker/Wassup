@@ -5,14 +5,14 @@ import jwt from "jsonwebtoken";
 
 const userSocketMap = new Map();
 
-// FIX: Force the incoming query lookup key directly to a string primitive
+//it finds the socket ID of a particular user., it returns a soclet of the user
 export const getReceiverSocketId = (userId) => {
     if (!userId) return null;
     return userSocketMap.get(userId.toString());
 };
 
 
-
+//giving our http server to this websocket server, Only this frontend domain can establish a socket connection.
 export const initializeSocket = (server) => {
     const io = new Server(server, {
         cors: {
@@ -21,6 +21,7 @@ export const initializeSocket = (server) => {
         },
     });
 
+//    This middleware runs before a socket connection is accepted.
     io.use((socket, next) => {
    
         try {
@@ -41,7 +42,8 @@ export const initializeSocket = (server) => {
 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             
-            // 🚀 FIX: Explicitly cast decoded token id to string here
+            // setting as strign ,Now every socket connection knows which user it belongs to.Socket connection: socket.id = abc123 socket.userId = user456
+//allows the server to identify the user later.
             socket.userId = decoded.id.toString(); 
             
             next();
@@ -53,13 +55,21 @@ export const initializeSocket = (server) => {
 }
     });
 
+
+//io = the Socket.IO server (manages all connected clients)
+// socket = one specific client connection
+//Tell me whenever any new client connects to my Socket.IO server
     io.on("connection", (socket) => {
-        const userId = socket.userId; // Already string casted
+        const userId = socket.userId; 
 
         userSocketMap.set(userId, socket.id);
         console.log("SOCKET CONNECTED USER:", socket.userId );
         
+
+        //sends the list of online users to all connected clients.
          io.emit('getOnlineUsers', Array.from(userSocketMap.keys()) )
+
+//Which exact user disconnected?" for this particular connected client, run this code when it disconnects."
 
         socket.on("disconnect", () => {
 
@@ -67,7 +77,7 @@ export const initializeSocket = (server) => {
 
             io.emit('getOnlineUsers', Array.from(userSocketMap.keys()) )
 
-            // console.log(`Disconnected: User [${userId}] removed`);
+            console.log(`Disconnected: User [${userId}] removed`);
 
         
         });

@@ -42,12 +42,14 @@ export const editProfile = catchAsync(async (req, res, next) => {
     if (bio) user.bio = bio.trim();
     
     await user.save();
+
+    //All connected clients receive update
     const io = req.app.get('io');
     if (io) {
         io.emit('user_profile_updated', user);
     }
 
-    // 5. Return payload wrapped in the data envelope (parsed properly by frontend)
+    
     return res.status(200).json({
         success: true,
         message: 'Profile Edited Successfully',
@@ -66,7 +68,7 @@ export const getOthers = catchAsync(async(req , res, next)=>{
     if(!users || users.length === 0){
         throw new AppError('Could not fetch other users', 404)
     }
-
+       //sedning arr of user objs
     return res.status(200).json({
         success : true,
         message : 'Fetched all users',

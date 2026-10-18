@@ -24,7 +24,7 @@ export default function Sidebar() {
             console.error("Logout exception cleared:", error);
         } finally {
             dispatch(setLogout())
-           navigate("/auth", { replace: true });
+           navigate("/send-otp", { replace: true });
         }
     };
 
@@ -40,7 +40,7 @@ export default function Sidebar() {
 <header className="bg-linear-to-br from-sky-600 to-sky-700 text-white p-7 rounded-b-2xl shadow-md flex flex-col gap-4 shrink-0">
     <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold tracking-wide">
-            Wasssup{" "}
+            Wassup{" "}
             <span className="text-base font-medium text-white  truncate max-w-56 inline-block align-middle">
                 {userData?.name || "Guest"} 
             </span>
@@ -68,7 +68,7 @@ export default function Sidebar() {
     </div>
 </header>
 
-  {/* ====== DIRECTORY CONTENT ====== */}
+  {/* all contacts  */}
   <div className="flex-1 overflow-y-auto px-4 py-3 space-y-6 bg-[#f8fafc]">
       
       {/* ONLINE COMPANIONS */}
@@ -104,7 +104,7 @@ export default function Sidebar() {
                     );
                 })
             }
-
+                {/* from my contacts list find who is currently online. */}
             {(!otherUsers || otherUsers.filter(user => onlineUsers?.includes(user._id)).length === 0) && (
                 <p className="text-xs italic text-slate-400 py-1 px-1">Others will come online wait.</p>
             )}
@@ -153,7 +153,8 @@ export default function Sidebar() {
                      <h3 className={`text-sm font-semibold truncate ${isSelected ? "text-[#0369a1]" : "text-slate-800"}`}>
                          {user?.name}
                      </h3>
-            <p className="text-xs text-slate-400 mt-0.5 truncate font-normal">                    {isUserOnline ? "👋 Online" : "Click to open chat thread"}
+            <p className="text-xs text-slate-400 mt-0.5 truncate font-normal">
+                  {isUserOnline ? "👋 Online" : "Click to open chat thread"}
                </p>
                  </div>
              </div>   
