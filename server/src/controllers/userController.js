@@ -1,6 +1,4 @@
 import User from '../models/UserModel.js'
-import Message from '../models/MessageModel.js'
-import jwt from 'jsonwebtoken' 
 import AppError , {catchAsync} from '../utils/CommonError.js'
 import { uploadImagetoCloudinary } from '../utils/ImageUploader.js'
 
@@ -85,7 +83,7 @@ if(!userId){
     throw new AppError('User id is required',400)
 }
 
-const user = await User.findById(userId)
+const user = await User.findById(userId).select('name profilePicture bio')
 
 if(!user){
     throw new AppError('User not found',404)

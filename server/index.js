@@ -29,7 +29,7 @@ app.set('io', io);
 app.use(morgan('dev'));
 app.use(express.json())
 //read data sent from HTML forms or URL-encoded requests.
-app.use(express.urlencoded({ extended : true }))
+// app.use(express.urlencoded({ extended : true }))
 app.use(cookieParser())
 
 

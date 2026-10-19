@@ -151,7 +151,7 @@ function handleClearImage(){
             if (response.data?.success) {
                 // Dispatch backend populated JSON response payload object directly into Redux
                 dispatch(appendSentMessage(response.data.data));
-            }
+            } 
         } catch (err) {
             console.error("Transmission exception layer dropped message:", err);
         }
@@ -226,7 +226,6 @@ return (
         </header>
 
         {/* MESSAGE CONTAINER */}
-        {/* added z-10 and relative so messages above the wallpaper layer */}
         <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-4 scrollbar-thin relative z-10">
             {isLoading ? (
                 <div className="h-full w-full flex items-center justify-center text-slate-400 text-sm font-medium">

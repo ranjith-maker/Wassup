@@ -51,7 +51,7 @@ return (
                 element={ isAuthenticated ? <ProfileDetails/> : <Navigate to='/send-otp' replace /> }
                 />
 
-                {/* 2. PUBLIC ROUTE CHANNELS (Require User Status as logined) */}
+                {/* 2. PUBLIC ROUTE CHANNELS no auth requirement */}
                 <Route 
                     path="/send-otp" 
                     element={!isAuthenticated ? <SendOtp /> : <Navigate to="/" replace />} 

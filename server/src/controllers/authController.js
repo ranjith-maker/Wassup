@@ -6,7 +6,7 @@ import AppError , {catchAsync} from '../utils/CommonError.js'
 import crypto from 'crypto';
 import bcrypt from 'bcrypt'
 import { sendOtptoEmail } from '../services/EmailServices.js'
-import OTP from '../models/OTPMode.js'
+import OTP from '../models/OTPModel.js'
 
 
 
@@ -14,11 +14,11 @@ export const sendOtp = catchAsync(async (req, res, next) => {
     const { email, name } = req.body;
 
     if (!email) {
-        return next(new AppError("Email is required", 400));
+        throw new AppError("Email is required", 400);
     }
 
     if (!validator.isEmail(email)) {
-        return next(new AppError("Please enter a valid email address", 400));
+        throw new AppError("Please enter a valid email address", 400);
     }
 
     // Check if user already exists in the database
@@ -26,7 +26,7 @@ export const sendOtp = catchAsync(async (req, res, next) => {
 
     // If they DON'T exist, it's a Signup flow -> Name is mandatory!
     if (!existingUser && (!name || !name.trim())) {
-        return next(new AppError("Name is required for new user registration", 400));
+        throw new AppError("Name is required for new user registration", 400);
     }
 
     // Generate a secure, guaranteed 6-digit numeric string OTP
@@ -56,8 +56,12 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
     const { email, otp, name } = req.body;
 
     if (!email || !otp) {
-        return next(new AppError("Email and OTP code are required", 400));
+        throw new AppError("Email and OTP code are required", 400);
     }
+
+if (typeof email !== 'string' || typeof otp !== 'string' || !/^\d{6}$/.test(otp)) {
+  throw new AppError('Invalid request', 400)
+}
 
     const normalizedEmail = email.toLowerCase();
 
@@ -65,7 +69,7 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
     const otpRecord = await OTP.findOne({ email: normalizedEmail, otp });
     
     if (!otpRecord) {
-        return next(new AppError("Invalid or expired OTP", 400));
+        throw new AppError("Invalid or expired OTP", 400);
     }
 
     // 2. Fetch or create the user profile since OTP is correct
@@ -74,7 +78,7 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
     if (!user) {
         // Fallback safety verification for signup data
         if (!name || !name.trim()) {
-            return next(new AppError("Registration data missing. Please try signing up again.", 400));
+            throw new AppError("Registration data missing. Please try signing up again.", 400);
         }
         // Save new user profile permanently to the DB
         user = await User.create({

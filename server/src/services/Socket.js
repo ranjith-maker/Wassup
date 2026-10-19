@@ -42,7 +42,8 @@ export const initializeSocket = (server) => {
 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             
-            // setting as strign ,Now every socket connection knows which user it belongs to.Socket connection: socket.id = abc123 socket.userId = user456
+            // setting as strign ,Now every socket connection knows which 
+            // user it belongs to.Socket connection: socket.id = abc123 socket.userId = user456
 //allows the server to identify the user later.
             socket.userId = decoded.id.toString(); 
             
@@ -69,7 +70,8 @@ export const initializeSocket = (server) => {
         //sends the list of online users to all connected clients.
          io.emit('getOnlineUsers', Array.from(userSocketMap.keys()) )
 
-//Which exact user disconnected?" for this particular connected client, run this code when it disconnects."
+//Which exact user disconnected?" for this particular connected client,
+//  run this code when it disconnects."
 
         socket.on("disconnect", () => {
 
