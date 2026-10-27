@@ -51,8 +51,11 @@ If the receiver is offline, nothing is lost: they load the history from MongoDB 
 
 Key design decisions
 HTTP for sending, WebSocket for notifying. Uploads fit multipart HTTP naturally, and the sender gets a clear success or failure response. The socket's only job is to tell the receiver something new arrived.
+
 JWT in an httpOnly cookie, not localStorage, so page scripts can't read the token. The same cookie authenticates the Socket.IO handshake, so HTTP and real time share one identity.
+
 Conversation key (roomId). The two user IDs are sorted and joined, so A→B and B→A always map to the same conversation. This is a database key, not a Socket.IO room.
+
 OTP with a TTL index. OTP documents expire after 5 minutes and are deleted after successful use.
 Resend over HTTPS instead of SMTP, because many cloud platforms block outbound SMTP ports. A verified domain is required to send to arbitrary recipients.
 
