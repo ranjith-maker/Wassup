@@ -3,6 +3,7 @@ A real-time one-to-one chat app, like a small WhatsApp.
 Sign in with an email OTP (no passwords), see the other users, and chat with text and images with live online status.
 
 Live: https://wassupchat.online
+App demo: https://youtu.be/viCUOXAnglk?si=1wi_vZc1PVHV7AxE
 
 Features
 Passwordless login. A 6-digit OTP is emailed to the user. The same flow handles both sign-up and sign-in.
